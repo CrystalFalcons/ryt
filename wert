@@ -1,0 +1,26 @@
+import requests
+
+def get_ethereum_price():
+    # URL to fetch the Ethereum price in USD
+    url = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+    
+    try:
+        # Sending a GET request to the CoinGecko API
+        response = requests.get(url)
+        
+        # Check if the response status code is 200 (successful)
+        if response.status_code == 200:
+            data = response.json()  # Parse the response JSON
+            eth_price = data['ethereum']['usd']  # Extract ETH price in USD
+            return eth_price
+        else:
+            print("Error: Unable to fetch data from CoinGecko API.")
+            return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+if __name__ == "__main__":
+    price = get_ethereum_price()
+    if price:
+        print(f"The current price of Ethereum (ETH) is: ${price}")
